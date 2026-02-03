@@ -307,6 +307,13 @@ void menu2_prosesOrder()
 {
 	clrscrn();
 	std::cout << "=== Update / Batalkan Order ===\n";
+
+	if (orders.size() == 0) {
+		std::cout
+			<< "Error: Belum ada order yang dibuat. Tolong tambahkan order terlebih dahulu"
+			<< "\n";
+		return;
+	}
 	refreshProcessArray();
 
 	for (int i = 0; i < 5; i++) {
