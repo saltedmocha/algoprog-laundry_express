@@ -1,0 +1,4 @@
+*.cpp   text diff=cpp
+*.exe   binary
+*.out   binary
+
