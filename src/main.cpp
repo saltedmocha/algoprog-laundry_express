@@ -290,10 +290,10 @@ void menu1_tambahOrder()
 	}
 	double price = newOrder.weight * BASE_PRICE * multCloth * multSvc;
 
-	size_t orderCount;
+	size_t orderCount = 0;
 	std::string keyLower = toLowerCase(newOrder.customerName);
 	for (const Order &o : orders) {
-		if (toLowerCase(newOrder.customerName).find(keyLower)
+		if (toLowerCase(o.customerName).find(keyLower)
 		    != std::string::npos) {
 			if (orderCount >= 3)
 				break;
