@@ -290,7 +290,21 @@ void menu1_tambahOrder()
 	}
 	double price = newOrder.weight * BASE_PRICE * multCloth * multSvc;
 
-	if (newOrder.weight > 10.0) {
+	size_t orderCount;
+	std::string keyLower = toLowerCase(newOrder.customerName);
+	for (const Order &o : orders) {
+		if (toLowerCase(newOrder.customerName).find(keyLower)
+		    != std::string::npos) {
+			if (orderCount >= 3)
+				break;
+			orderCount++;
+		}
+	}
+
+	if (orderCount >= 3) {
+		price *= 0.85;
+		newOrder.isDiscounted = true;
+	} else if (newOrder.weight >= 10.0) {
 		price *= 0.9;
 		newOrder.isDiscounted = true;
 	}
