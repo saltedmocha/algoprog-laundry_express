@@ -477,7 +477,13 @@ void menu3_cariOrder()
 void menu4_estimasi()
 {
 	clrscrn();
-	std::cout << "=== Prediksi Waktu Rekursif ===\n";
+	std::cout << "=== Prediksi Waktu ===\n";
+	if (orders.size() == 0) {
+		std::cout
+			<< "Error: Belum ada order yang dibuat. Tolong tambahkan order terlebih dahulu"
+			<< "\n";
+		return;
+	}
 
 	Order last = orders.back();
 	int id = getValidInput<int>("Masukkan ID Order: ", 1, last.id);
@@ -513,21 +519,22 @@ void menu4_estimasi()
 	int totalMinutes = 0;
 
 	std::cout
-		<< "Posisi dalam antrian pengerjaan (diurutkan Prio & Status):\n";
+		<< "Posisi dalam antrian pengerjaan (diurutkan Prioritas & Status):\n";
 	for (const Order *o : queue) {
 		int myTime = calculateRemainingTime(o->status, o->serviceType);
 
 		totalMinutes += myTime;
 		if (o->id == id) {
-			std::cout << ">> Order anda (ID " << id << ") <<\n";
+			std::cout << "Order anda (ID " << id << ") <<\n";
 			break;
 		} else {
-			std::cout << "- ID " << o->id << " (Prio "
+			std::cout << "- ID " << o->id << " (Prioritas "
 				  << o->priority << ")\n";
 		}
 	}
 
-	std::cout << "\nEstimasi Selesai: " << totalMinutes << " menit lagi."
+	std::cout << "\nEstimasi Selesai: " << totalMinutes
+		  << " menit lagi.\nDengan biaya: " << targetOrder->finalPrice
 		  << std::endl;
 	resetInput();
 }
@@ -714,14 +721,14 @@ int main()
 {
 	while (true) {
 		showHeader();
-		std::cout << "1. Tambah Order\n"
-			  << "2. Proses Order (Update/Batal)\n"
-			  << "3. Cari Data\n"
-			  << "4. Prediksi Waktu\n"
-			  << "5. Laporan Bisnis\n"
-			  << "6. Optimasi Mesin\n"
-			  << "7. Analisis Data\n"
-			  << "8. Reset Data\n"
+		std::cout << "1. Tambah order baru\n"
+			  << "2. Proses Order (Update status)\n"
+			  << "3. Cari dan Lihat detail order\n"
+			  << "4. Hitung / Estimasi waktu order dan harga\n"
+			  << "5. Generate laporan harian\n"
+			  << "6. Optimasi urutan pencucian\n"
+			  << "7. Analisis data pelanggan\n"
+			  << "8. Reset data harian\n"
 			  << "9. Keluar\n";
 
 		int choice = getValidInput<int>("Pilih Menu: ", 1, 9);
